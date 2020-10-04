@@ -183,7 +183,10 @@ class Highlight(commands.Cog):
 
         ch_highlight = self.bot.get_channel(
             guild_data[1])  # 1 as highlight_channel_id
-        await ch_highlight.send(f":tada: {message.author.display_name}'s message got a **{count} reactions**!", embed=embed)
+        await ch_highlight.send(dedent(f"""\
+                :tada: ** {count} REACTIONS! ** :tada:
+                {message.author.display_name}'s message got {count} reactions! 
+            """), embed=embed)
 
 
 def setup(bot):

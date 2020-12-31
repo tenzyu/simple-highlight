@@ -44,3 +44,17 @@ Send when the number of reactions are 5, 10, 20 ... 100, 200 ... 900, 1000.
 1. I think I wrote some hackneyed code. I want you to code reviews.
 2. I'm not native English speakers, So I'm always open to better translations from you.
 3. I've done some testing, but there are always unknown problems. I welcome your reports to the issue.
+
+<hr />
+
+**解決しない or 新しい問題** があれば **Issue** を立てるか、**[Twitter](https://twitter.com/tenzyumasuda)** にダイレクトメッセージを送ってください。気軽にどうぞ！
+
+<br />
+
+<br />
+
+<p align="center">©️ 2020 Tenzyu Masuda</p>
+
+<br />
+
+<br />

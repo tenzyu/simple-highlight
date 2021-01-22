@@ -29,22 +29,26 @@ class Highlight(commands.Cog):
 
         with self.guild_db:
             c = self.guild_db.cursor()
-            c.execute("""
+            c.execute(
+                """
                 CREATE TABLE IF NOT EXISTS guild(
                     guild_id bigint PRIMARY KEY,
                     highlight_channel_id bigint,
                     notice_reaction_count text
                 )
-            """)
+            """
+            )
 
         with self.message_db:
             c = self.message_db.cursor()
-            c.execute("""
+            c.execute(
+                """
                 CREATE TABLE IF NOT EXISTS message(
                     message_id bigint PRIMARY KEY,
                     max_reaction_count int
                 )
-            """)
+            """
+            )
 
     def find_highlight_channel(self, guild_id):
         sql = """
@@ -84,7 +88,9 @@ class Highlight(commands.Cog):
 
         response = self.find_highlight_channel(guild_id)
         if not response:
-            default_notice_count = "5,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000"
+            default_notice_count = (
+                "5,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000"
+            )
             sql = """
                 INSERT
                     INTO guild (guild_id, highlight_channel_id, notice_reaction_count)
@@ -171,22 +177,78 @@ class Highlight(commands.Cog):
         if not str(count) in notice_reaction_counts:
             return
 
+        ch_highlight = self.bot.get_channel(guild_data[1])
+
+        highlight_msg = dedent(
+            f"""\
+                :tada: ** {count} REACTIONS! ** :tada:
+                {message.author.display_name}'s message got {count} reactions! 
+            """
+        )
+
+        # If Highlight from NSFW to SFW
+        if message.channel.is_nsfw() and not ch_highlight.is_nsfw():
+            embed = discord.Embed(
+                title="**Highlight from NSFW**",
+                url=message.jump_url,
+                description="click to view messageUrl",
+                timestamp=message.created_at,
+            )
+            embed.set_footer(text="#NSFW")
+            await ch_highlight.send(highlight_msg, embed=embed)
+            return
+
+        # If no messages
+        if len(message.content) == 0:
+
+            if message.attachments:
+                if message.attachments[0].is_spoiler():
+                    fixed_file = await message.attachments[0].to_file(spoiler=True)
+                    await ch_highlight.send(highlight_msg, file=fixed_file)
+                else:
+                    embed = discord.Embed(
+                        title="#" + message.channel.name,
+                        url=message.jump_url,
+                        timestamp=message.created_at,
+                    )
+                    embed.set_author(
+                        name=message.author.display_name,
+                        icon_url=message.author.avatar_url,
+                    )
+                    embed.set_footer(text="#" + message.channel.name)
+                    embed.set_image(url=message.attachments[0].url)
+                    await ch_highlight.send(highlight_msg, embed=embed)
+            if message.embeds:
+                for embed in message.embeds:
+                    await ch_highlight.send(highlight_msg, embed=embed)
+            return
+
         embed = discord.Embed(
             title="#" + message.channel.name,
             url=message.jump_url,
             description=message.content,
-            timestamp=message.created_at)
-        embed.set_author(
-            name=message.author.display_name,
-            icon_url=message.author.avatar_url
+            timestamp=message.created_at,
         )
+        embed.set_author(
+            name=message.author.display_name, icon_url=message.author.avatar_url
+        )
+        embed.set_footer(text="#" + message.channel.name)
+        fixed_file = None
+        if message.attachments:
+            if message.attachments[0].is_spoiler():
+                fixed_file = await message.attachments[0].to_file(spoiler=True)
+            else:
+                embed.set_image(url=message.attachments[0].url)
 
-        ch_highlight = self.bot.get_channel(
-            guild_data[1])  # 1 as highlight_channel_id
-        await ch_highlight.send(dedent(f"""\
-                :tada: ** {count} REACTIONS! ** :tada:
-                {message.author.display_name}'s message got {count} reactions! 
-            """), embed=embed)
+        await ch_highlight.send(
+            highlight_msg,
+            embed=embed,
+            file=fixed_file,
+        )
+        if message.embeds:
+            await ch_highlight.send("────────")
+            for embed in message.embeds:
+                await ch_highlight.send(embed=embed)
 
 
 def setup(bot):

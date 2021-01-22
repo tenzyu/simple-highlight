@@ -133,9 +133,3 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
-
-# modded
-debug/
-.vscode
-_*
-.DS_Store

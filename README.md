@@ -42,7 +42,7 @@
 
 <br />
 
-<p align="center">©️ 2020 Tenzyu Masuda</p>
+<p align="center">©️ 2020 - 2021 Tenzyu Masuda</p>
 
 <br />
 

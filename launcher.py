@@ -1,6 +1,5 @@
-import glob
-import pathlib
 from os import getenv
+from pathlib import Path
 from traceback import print_exc
 
 from discord import Game
@@ -11,12 +10,12 @@ load_dotenv()
 
 
 class MyBot(commands.Bot):
-    def __init__(self, **options):
-        super().__init__(command_prefix=commands.when_mentioned_or("/"), **options)
+    def __init__(self):
+        super().__init__(command_prefix=commands.when_mentioned_or("/"))
         print("Simple Highlightを起動します。")
         self.remove_command("help")
 
-        for cog in pathlib.Path("cogs/").glob("*.py"):
+        for cog in Path("cogs/").glob("*.py"):
             try:
                 self.load_extension("cogs." + cog.stem)
                 print(f"{cog.stem}.pyは正常にロードされました。")
@@ -29,7 +28,11 @@ class MyBot(commands.Bot):
         await self.change_presence(activity=activity)
 
     async def on_command_error(self, ctx, error):
-        ignore_errors = (commands.CommandNotFound, commands.CheckFailure)
+        ignore_errors = (
+            commands.CommandNotFound,
+            commands.BadArgument,
+            commands.CheckFailure,
+        )
         if isinstance(error, ignore_errors):
             return
         await ctx.send(error)

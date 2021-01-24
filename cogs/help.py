@@ -9,18 +9,26 @@ class Help(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.command()
     async def help(self, ctx):
-        await ctx.send(dedent("""\
-            **Simple Highlight** allows you to implement Highlight feature.
+        await ctx.send(
+            dedent(
+                """\
+            # Simple Highlight は Discord サーバーにハイライト機能を実装する bot です。
 
-            > `/set`
-            Sets the highlight to channel where a message sent.
+            # 使い方
+            `/set (<HighlightChannel>)`
+            ハイライトを送るチャンネルを設定します。
+            
+            `/remove`
+            ハイライト機能を削除します。チャンネルは削除されません。
 
-            > `/remove`
-            Removes the Highlight feature.
+            # GitHubはこちら
+            <https://github.com/tenzyu/simple-quote>
 
-            See also GitHub for more information:
-            https://github.com/tenzyu/simple-highlight
-            """))
+            # サポートサーバーはこちら
+            <https://discord.gg/4nSKCE9RRn>
+            """
+            )
+        )
 
 
 def setup(bot):

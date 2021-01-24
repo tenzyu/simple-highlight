@@ -97,7 +97,7 @@ class Highlight(commands.Cog):
                     VALUES (?,?,?)
                 """
             val = (guild_id, channel_id, default_notice_count)
-            text = f"Highlight Channel has been set to {channel.mention}"
+            text = f"ハイライトチャンネルは {channel.mention} に設定されました。"
         else:
             sql = """
                 UPDATE guild
@@ -105,7 +105,7 @@ class Highlight(commands.Cog):
                     WHERE guild_id = ?
                 """
             val = (channel_id, guild_id)
-            text = f"Highlight Channel has been updated to {channel.mention}"
+            text = f"ハイライトチャンネルは {channel.mention} に上書きされました。"
         with self.guild_db:
             c = self.guild_db.cursor()
             c.execute(sql, val)
@@ -121,7 +121,7 @@ class Highlight(commands.Cog):
 
         response = self.find_highlight_channel(guild_id)
         if not response:
-            await ctx.send("This server is not registered!")
+            await ctx.send("このサーバーはまだ登録されていません。")
             return
         sql = """
             DELETE
@@ -134,7 +134,7 @@ class Highlight(commands.Cog):
             c = self.guild_db.cursor()
             c.execute(sql, val)
 
-        await ctx.send(f"{ctx.channel.mention} has been removed.")
+        await ctx.send("ハイライトチャンネルの設定を削除しました。")
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, reaction: discord.RawReactionActionEvent):
@@ -182,16 +182,16 @@ class Highlight(commands.Cog):
         highlight_msg = dedent(
             f"""\
                 :tada: ** {count} REACTIONS! ** :tada:
-                {message.author.display_name}'s message got {count} reactions! 
+                {message.author.display_name}のメッセージが{count}リアクションを得ました! 
             """
         )
 
         # If Highlight from NSFW to SFW
         if message.channel.is_nsfw() and not ch_highlight.is_nsfw():
             embed = discord.Embed(
-                title="**Highlight from NSFW**",
+                title="**NSFWからのハイライト**",
                 url=message.jump_url,
-                description="click to view messageUrl",
+                description="messageUrlをクリックして表示",
                 timestamp=message.created_at,
             )
             embed.set_footer(text="#NSFW")

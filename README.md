@@ -1,49 +1,38 @@
 # Simple Highlight
 
-> Simple Highlight is a Discord bot that allows you to implement Highlight feature.
+> Simple Highlight は Discord サーバーにハイライト機能を実装する bot です。
 
-### **[✉️ Invite to your server](https://discord.com/api/oauth2/authorize?client_id=761917911425876010&permissions=84992&scope=bot)**
+### **[✉️ Invite to your server](https://discord.com/api/oauth2/authorize?client_id=761917911425876010&permissions=117760&scope=bot)**
 
-## Usage
+## 使い方
 
 ### `/set (<HighlightChannel>)`
 
-Sets the highlight channel to your server.
+ハイライトを送るチャンネルを設定します。
 
-If didn't send`<HighlightChannel>`, sets the highlight channel to the channel where a message sent.
+`<HighlightChannel>`を送信していない場合は、メッセージが送信されたチャンネルをハイライトチャンネルに設定します。
 
-Highlight Channel where messages with many reactions are sent with embed.
+このチャンネルにリアクション数の多いメッセージが埋め込みリンクで送信されることになります。
 
-Please pass these arguments by ID. You can also use a name, but the ID is more reliable.
+`<HighlightChannel>`(引数)はIDを渡してください。チャンネル名でも構いませんが、IDは確実です。
 
 ### `/remove`
 
-Removes the Highlight feature.
+ハイライト機能を削除します。チャンネルは削除されません。
 
-Don't worry. Channels will not be deleted.
+## 必要な権限
 
-### `/help`
+- View Channels
+- Send Messages (メッセージを送信)
+- Embed Link (埋め込みリンク)
+- Attach Files (ファイルを添付)
+- Read Messages History (メッセージ履歴を読む)
 
-Shows the help.
+### ハイライトメッセージとは
 
-## Required Permissions
+リアクション数の多いメッセージをハイライトメッセージと呼んでいます。
 
-- Read Messages
-- Send Messages
-- Embed Links
-- Read Message History
-
-### What is the highlighted message?
-
-We call a messages with many reactions Highlight Message.
-
-Send when the number of reactions are 5, 10, 20 ... 100, 200 ... 900, 1000.
-
-## NOTE
-
-1. I think I wrote some hackneyed code. I want you to code reviews.
-2. I'm not native English speakers, So I'm always open to better translations from you.
-3. I've done some testing, but there are always unknown problems. I welcome your reports to the issue.
+リアクション数が5, 10, 20 ... 100, 200 ... 900, 1000のときにハイライトとして送信されます。
 
 <hr />
 

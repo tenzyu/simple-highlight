@@ -6,7 +6,7 @@
 
 ## 使い方
 
-### `/set (<HighlightChannel>)`
+### `/set <HighlightChannel>`
 
 ハイライトを送るチャンネルを設定します。
 

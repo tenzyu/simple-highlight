@@ -2,7 +2,7 @@
 
 > Simple Highlight は Discord サーバーにハイライト機能を実装する bot です。
 
-### **[✉️ Invite to your server](https://discord.com/api/oauth2/authorize?client_id=761917911425876010&permissions=117760&scope=bot)**
+### **[✉️ Click To Invite !](https://discord.com/api/oauth2/authorize?client_id=761917911425876010&permissions=117760&scope=bot)**
 
 ## 使い方
 
